@@ -39,8 +39,8 @@
            :subname (str "//" db-host ":" db-port "/" db-name)
            ; Any additional keys are passed to the driver
            ; as driver-specific properties.
-           :user "johorst"
-           :password "666jojojo"}))
+           :user ""
+           :password ""}))
 ;geht:
 ;(j/insert! mysql-db :konten
 ;           {:Kontonummer 9 :Kontostand 3}
