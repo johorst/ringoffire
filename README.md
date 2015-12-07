@@ -5,10 +5,10 @@ Based on cojure / ring (which uses jetty).
 
 ## Usage
 (don't ;) ) <br>
-Be shure to have a MySQL Instance running.
-clone project.
-use lein to catch dependencies ('lein dep') and start repl ('lein repl').
-user => (use 'hello-world.core)
+Be shure to have a MySQL Instance running.<br>
+clone project.<br>
+use lein to catch dependencies ('lein dep') and start repl ('lein repl').<br>
+user => (use 'hello-world.core)<br>
 starts server. As printed in hello-world/core.clj your mySQL DB is connected (and written to).
 
 ## License
