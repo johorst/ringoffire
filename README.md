@@ -4,7 +4,7 @@ A Clojure library designed to show a "cut through" from application layer to Dat
 Based on cojure / ring (which uses jetty).
 
 ## Usage
-(don't ;) )
+(don't ;) ) <br>
 Be shure to have a MySQL Instance running.
 clone project.
 use lein to catch dependencies ('lein dep') and start repl ('lein repl').
