@@ -24,9 +24,7 @@
 ;    (j/query mysql-db ["select * from konten"]))
 
 (def app
-  (-> (handler wrap-params)
-;     (sqlquery)
-      ))
+  (-> handler wrap-params))
 
 (require '[clojure.java.jdbc :as j])
  
@@ -39,12 +37,12 @@
            :subname (str "//" db-host ":" db-port "/" db-name)
            ; Any additional keys are passed to the driver
            ; as driver-specific properties.
-           :user ""
-           :password ""}))
+           :user "johorst"
+           :password "666jojojo"}))
 ;geht:
-;(j/insert! mysql-db :konten
-;           {:Kontonummer 9 :Kontostand 3}
-;           {:Kontonummer 10 :Kontostand 1})
+(j/insert! mysql-db :konten
+           {:Kontonummer 11 :Kontostand 31}
+           {:Kontonummer 12 :Kontostand 11})
 
 
 (run-jetty app {:port 8080})
