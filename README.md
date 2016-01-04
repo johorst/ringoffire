@@ -7,9 +7,17 @@ Based on cojure / ring (which uses jetty).
 (don't ;) ) <br>
 Be shure to have a MySQL Instance running.<br>
 clone project.<br>
-use lein to catch dependencies ('lein dep') and start repl ('lein repl').<br>
-user => (use 'hello-world.core)<br>
+'lein run'<br>
 starts server. As printed in hello-world/core.clj your mySQL DB is connected (and written to).
+
+my deploy.bat:
+cd server
+rm * -rf
+git clone https://github.com/johorst/ringoffire.git
+cd ringoffire
+//TODO: mysql credentials
+lein run
+
 
 ## License
 
