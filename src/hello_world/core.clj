@@ -16,8 +16,8 @@
            :subname (str "//" db-host ":" db-port "/" db-name)
            ; Any additional keys are passed to the driver
            ; as driver-specific properties.
-           :user ""
-           :password ""}))
+           :user "usernameplaceholder"
+           :password "passwordplaceholder"}))
 
 
 (defn sqlquery [name]
@@ -43,10 +43,6 @@
 
 (def app
   (-> handler p/wrap-params))
-
- 
-;           {:Kontonummer 11 :Kontostand 31}
-;           {:Kontonummer 12 :Kontostand 11})
 
 
 (defn -main
