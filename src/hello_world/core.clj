@@ -4,7 +4,8 @@
   (:require [ring.middleware.params :as p]
         [ring.util.response :as r]
         [ring.adapter.jetty :as j]
-            [clojure.java.jdbc :as jdbc])
+        [clojure.java.jdbc :as jdbc]
+        [ring.middleware.json :as wrap-json-response])
   (:gen-class))
 
 (let [db-host "localhost"
@@ -42,7 +43,7 @@
       (r/content-type "application/json")))
 
 (def app
-  (-> handler p/wrap-params))
+  (-> wrap-json-response handler p/wrap-params))
 
 (defn -main
  "Kommentar."
