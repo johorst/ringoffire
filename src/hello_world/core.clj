@@ -4,8 +4,7 @@
   (:require [ring.middleware.params :as p]
         [ring.util.response :as r]
         [ring.adapter.jetty :as j]
-        [clojure.java.jdbc :as jdbc]
-        '[ring.middleware.json :refer [wrap-json-response]])
+        [clojure.java.jdbc :as jdbc])
   (:gen-class))
 
 (let [db-host "localhost"
@@ -26,15 +25,14 @@
 (first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
 
 (defn page [name]
-;  (str "<html><body>"
-;       (if name
-;  (str "Nice to meet you, " name "! \n" (sqlquery name) )
-  (sqlquery name)
-;        (str "<form>"
-;              "Name: <input name='name' type='text'>"
-;              "<input type='submit'>"
-;              "</form>"))
-;       "</body></html>")
+  (str "<html><body>"
+       (if name
+  (str "Nice to meet you, " name "! \n" (sqlquery name) )
+        (str "<form>"
+              "Name: <input name='name' type='text'>"
+              "<input type='submit'>"
+              "</form>"))
+       "</body></html>")
 )
 
 
@@ -43,7 +41,7 @@
       (r/content-type "application/json")))
 
 (def app
-  (-> wrap-json-response handler p/wrap-params))
+  (-> handler p/wrap-params))
 
 (defn -main
  "Kommentar."
