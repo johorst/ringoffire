@@ -5,7 +5,7 @@
         [ring.util.response :as r]
         [ring.adapter.jetty :as j]
         [clojure.java.jdbc :as jdbc]
-        [ring.middleware.json :as wrap-json-response])
+        '[ring.middleware.json :refer [wrap-json-response]])
   (:gen-class))
 
 (let [db-host "localhost"
