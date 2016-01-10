@@ -7,5 +7,6 @@
                  [org.clojure/java.jdbc "0.4.2"]
                  [mysql/mysql-connector-java "5.1.6"]
                  [ring/ring-core "1.4.0"]
-                 [ring/ring-jetty-adapter "1.4.0"]]
+                 [ring/ring-jetty-adapter "1.4.0"]
+                 [ring/ring-json "0.4.0"]]
   :main hello-world.core)
