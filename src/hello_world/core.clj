@@ -25,29 +25,27 @@
 (first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
 
 (defn page [name]
-  (str "<html><body>"
-       (if name
-  (str "Nice to meet you, " name "! \n" (sqlquery name) )
-         (str "<form>"
-              "Name: <input name='name' type='text'>"
-              "<input type='submit'>"
-              "</form>"))
-       "</body></html>"))
+;  (str "<html><body>"
+;       (if name
+;  (str "Nice to meet you, " name "! \n" (sqlquery name) )
+  (sqlquery name)
+;        (str "<form>"
+;              "Name: <input name='name' type='text'>"
+;              "<input type='submit'>"
+;              "</form>"))
+;       "</body></html>")
+)
+
 
 (defn handler [{{name "name"} :params}]
   (-> (r/response (page name))
-      (r/content-type "text/html")))
-
-;(def sqlquery
-;    (j/query mysql-db ["select * from konten"]))
+      (r/content-type "application/json")))
 
 (def app
   (-> handler p/wrap-params))
-
 
 (defn -main
  "Kommentar."
  [& args]
  (j/run-jetty app {:port 8080}))
-;(def server (run-jetty app {:port 8080 :join? false}))
 
