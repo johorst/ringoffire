@@ -38,7 +38,7 @@
 
 (defn handler [{{name "name"} :params}]
   (-> (r/response (page name))
-      (r/content-type "application/json")))
+      (r/content-type "text/html")))
 
 (def app
   (-> handler p/wrap-params))
