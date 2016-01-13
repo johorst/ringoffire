@@ -27,7 +27,7 @@
 (defn page [name]
   (str "<html><body>"
        (if name
-  (str "Nice to meet you, " name "! \n" (sqlquery name) )
+  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name)"'><\div>")
         (str "<form>"
               "Name: <input name='name' type='text'>"
               "<input type='submit'>"
