@@ -23,6 +23,8 @@
 (defn sqlquery [name]
   
 (first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
+;(jdbc/update! mysql-db :konten {:Guthaben 99} ["Name = ?" name]))
+;maybe this sets the guthaben to 99
 
 (defn page [name]
   (str "<html><body>"
