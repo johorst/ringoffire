@@ -6,6 +6,9 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/java.jdbc "0.4.2"]
                  [mysql/mysql-connector-java "5.1.6"]
+                 [compojure "1.2.0"]
+                 [ring/ring-defaults "0.1.2"]
+                 [ring/ring-json "0.3.1"]
                  [ring/ring-core "1.4.0"]
                  [ring/ring-jetty-adapter "1.4.0"]]
   :main hello-world.core)
