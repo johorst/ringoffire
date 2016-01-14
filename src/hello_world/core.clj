@@ -31,7 +31,7 @@
 (defn page [name]
   (str "<html><body>"
        (if name
-  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery [name empfaenger])"'></div>")
+  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery [name])"'></div>")
         (str "<form>"
               "Name: <input name='name' type='text'>"
               "<input type='submit'>"
@@ -40,8 +40,8 @@
 )
 
 
-(defn handler [{{name "name", empfaenger "empfaenger"} :params}]
-  (-> (r/response (page [name empfaenger]))
+(defn handler [{{name "name"} :params}]
+  (-> (r/response (page [name]))
       (r/content-type "text/html")))
 
 (def app
