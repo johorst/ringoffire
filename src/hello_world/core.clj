@@ -40,7 +40,7 @@
 )
 
 
-(defn handler [{{name "name"} {empfaenger "empfaenger"} :params}]
+(defn handler [{{name "name", empfaenger "empfaenger"} :params}]
   (-> (r/response (page [name empfaenger]))
       (r/content-type "text/html")))
 
