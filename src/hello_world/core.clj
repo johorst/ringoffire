@@ -20,18 +20,18 @@
            :password "passwordplaceholder"}))
 
 
-(defn sqlquery [name]
+(defn sqlquery [name empfaenger]
   
 ;(first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
 (jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand - 1 WHERE Kontostand > 0 AND Name = ?" name])
-(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand + 1 WHERE NurZahlen = 0 AND Name = ?" name])) 
+(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand + 1 WHERE NurZahlen = 0 AND Name = ?" empfaenger])) 
 ;(jdbc/update! mysql-db :konten {:Kontostand 99} ["Name = ?" name]))
 ; maybe this sets the guthaben to 99
 
 (defn page [name]
   (str "<html><body>"
        (if name
-  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name)"'></div>")
+  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name empfaenger)"'></div>")
         (str "<form>"
               "Name: <input name='name' type='text'>"
               "<input type='submit'>"
