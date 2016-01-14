@@ -23,7 +23,7 @@
 (defn sqlquery [name]
   
 ;(first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
-(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand - 1 WHERE Kontostand > 95 AND Name = ?" name])) 
+(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand - 1 WHERE Kontostand > 0 AND Name = ?" name])) 
 ;(jdbc/update! mysql-db :konten {:Kontostand 99} ["Name = ?" name]))
 ; maybe this sets the guthaben to 99
 
