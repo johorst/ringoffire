@@ -29,7 +29,7 @@
 ; maybe this sets the guthaben to 99
 
 (defn page [name empfaenger]
-  (str "<html><body>"
+  (str "<!DOCTYPE html><body>"
        (if name
   (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name empfaenger)"'></div>")
         (str "<form>"
