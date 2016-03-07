@@ -24,7 +24,7 @@
   
 ;(first (jdbc/query mysql-db [(str "select * from konten where Name='" name "'")])))
 (jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand - 1 WHERE Kontostand > 0 AND Name = ?" name])
-(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand + 1 WHERE NurZahlen = 0 AND Name = ?" empfaenger])) 
+(jdbc/execute! mysql-db ["UPDATE konten SET Kontostand = Kontostand + 1 WHERE NurZahlen = 0 AND Name = ?" empfaenger]) 
 ;(jdbc/update! mysql-db :konten {:Kontostand 99} ["Name = ?" name]))
 ; maybe this sets the guthaben to 99
 ;(jdbc/execute! mysql-db ["insert into transaktionen_geberkonten2nehmerkonten (betrag) select MIN(geberkonten.stand) from geberkonten where geberkonten.nr in ('?', '00000000-0000-0000-0000-00000025')" name])
