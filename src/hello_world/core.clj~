@@ -1,52 +1,55 @@
 ;; When executed, this file will run a basic web server
 ;; on http://localhost:8080.
+(ns hello-world.core
+  (:require [ring.middleware.params :as p]
+        [ring.util.response :as r]
+        [ring.adapter.jetty :as j]
+        [clojure.java.jdbc :as jdbc])
+  (:gen-class))
 
-(ns ring.example.params
-  (:use ring.middleware.params
-        ring.util.response
-        ring.adapter.jetty))
-
-(defn page [name]
-  (str "<html><body>"
-       (if name
-         (str "Nice to meet you, " name "!")
-         (str "<form>"
-              "Name: <input name='name' type='text'>"
-              "<input type='submit'>"
-              "</form>"))
-       "</body></html>"))
-
-(defn handler [{{name "name"} :params}]
-  (-> (response (page name))
-      (content-type "text/html")))
-
-;(def sqlquery
-;    (j/query mysql-db ["select * from konten"]))
-
-(def app
-  (-> (handler wrap-params)
-;     (sqlquery)
-      ))
-
-(require '[clojure.java.jdbc :as j])
- 
 (let [db-host "localhost"
       db-port 3306
       db-name "mgm_schema"]
- 
+
   (def mysql-db {:classname "com.mysql.jdbc.Driver" ; must be in classpath
            :subprotocol "mysql"
            :subname (str "//" db-host ":" db-port "/" db-name)
            ; Any additional keys are passed to the driver
            ; as driver-specific properties.
-           :user "johorst"
-           :password "666jojojo"}))
-;geht:
-;(j/insert! mysql-db :konten
-;           {:Kontonummer 9 :Kontostand 3}
-;           {:Kontonummer 10 :Kontostand 1})
+           :user "usernameplaceholder"
+           :password "passwordplaceholder"}))
 
 
-(run-jetty app {:port 8080})
-;(def server (run-jetty app {:port 8080 :join? false}))
+(defn sqlquery [name empfaenger]
+  (jdbc/execute! mysql-db ["insert into transaktionen_geberkonten2nehmerkonten (betrag) select MIN(geberkonten.stand) from geberkonten where geberkonten.nr in ( ? , '00000000-0000-0000-0000-00000025')" name])
+  (jdbc/execute! mysql-db ["insert into transaktionen_geberkonten2nehmerkonten (valid) select valid from geberkonten where geberkonten.nr =?" name])
+  (jdbc/update! mysql-db :transaktionen_geberkonten2nehmerkonten {:sender name, :empfaenger empfaenger, :valid 0} (sql/where {:valid 1}))
+  (jdbc/execute! mysql-db ["update geberkonten set stand = stand - 25 where geberkonten.nr = ? AND stand > 0" name])
+)
+
+
+
+(defn page [name empfaenger]
+  (str "<!DOCTYPE html><body>"
+       (if name
+  (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name empfaenger)"'></div>")
+        (str "<form>"
+              "Name: <input name='name' type='text'>"
+              "<input type='submit'>"
+              "</form>"))
+       "</body></html>")
+)
+
+
+(defn handler [{{name "name" empfaenger "empfaenger"} :params}]
+  (-> (r/response (page name empfaenger))
+      (r/content-type "text/html")))
+
+(def app
+  (-> handler p/wrap-params))
+
+(defn -main
+ "Kommentar."
+ [& args]
+ (j/run-jetty app {:port 8080}))
 

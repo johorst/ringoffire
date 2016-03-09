@@ -4,7 +4,8 @@
   (:require [ring.middleware.params :as p]
         [ring.util.response :as r]
         [ring.adapter.jetty :as j]
-        [clojure.java.jdbc :as jdbc])
+        [clojure.java.jdbc :as jdbc]
+        [java-jdbc.sql :as sql])
   (:gen-class))
 
 (let [db-host "localhost"
