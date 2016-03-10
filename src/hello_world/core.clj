@@ -23,9 +23,9 @@
 
 (defn sqlquery [name empfaenger]
   (jdbc/execute! mysql-db ["insert into transaktionen_geberkonten2nehmerkonten (betrag) select MIN(geberkonten.stand) from geberkonten where geberkonten.nr in ( ? , '00000000-0000-0000-0000-00000025')" name])
-  (jdbc/execute! mysql-db ["update transaktionen_geberkonten2nehmerkonten set betrag = betrag * (update geberkonten set stand = stand - 25 where geberkonten.nr = ? AND stand > 0) where sender=?" name name])
+  (jdbc/execute! mysql-db ["update transaktionen_geberkonten2nehmerkonten set betrag = betrag * (select count(*) from geberkonten where geberkonten.nr = ? AND stand > 0) where sender=?" name name])
   (jdbc/update! mysql-db :transaktionen_geberkonten2nehmerkonten {:sender name, :empfaenger empfaenger, :valid 0} (sql/where {:valid 1}))
- ; (jdbc/execute! mysql-db ["update geberkonten set stand = stand - 25 where geberkonten.nr = ? AND stand > 0" name])
+  (jdbc/execute! mysql-db ["update geberkonten set stand = stand - 25 where geberkonten.nr = ? AND stand > 0" name])
 )
 
 
