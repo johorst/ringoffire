@@ -1,5 +1,3 @@
-;; When executed, this file will run a basic web server
-;; on http://localhost:8080.
 (ns hello-world.core
   (:require [ring.middleware.params :as p]
         [ring.util.response :as r]
@@ -15,8 +13,6 @@
   (def mysql-db {:classname "com.mysql.jdbc.Driver" ; must be in classpath
            :subprotocol "mysql"
            :subname (str "//" db-host ":" db-port "/" db-name)
-           ; Any additional keys are passed to the driver
-           ; as driver-specific properties.
            :user "usernameplaceholder"
            :password "passwordplaceholder"}))
 
@@ -28,22 +24,30 @@
   (jdbc/execute! mysql-db ["update geberkonten set stand = stand - 25 where geberkonten.nr = ? AND stand > 0" name])
 )
 
+(defn sqlquery_s [saldo]
+ ; (+ 
+ (:stand
+  (first (jdbc/query mysql-db ["select stand from geberkonten where geberkonten.nr = ?" saldo])))
+ ;    (:betrag
+ ; (first (jdbc/query mysql-db ["select sum(betrag) from transaktionen_geberkonten2nehmerkonten where empfaenger = ?" saldo])))
+)
 
-
-(defn page [name empfaenger]
+(defn page [name empfaenger saldo]
   (str "<!DOCTYPE html><body>"
        (if name
   (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name empfaenger)"'></div>")
-        (str "<form>"
+         (str "<form>"
               "Name: <input name='name' type='text'>"
               "<input type='submit'>"
               "</form>"))
-       "</body></html>")
+       (if saldo
+  (str "Dein Guthaben ist: " (sqlquery_s saldo)))
+            "</body></html>")
 )
 
 
-(defn handler [{{name "name" empfaenger "empfaenger"} :params}]
-  (-> (r/response (page name empfaenger))
+(defn handler [{{name "name" empfaenger "empfaenger" saldo "saldo"} :params}]
+  (-> (r/response (page name empfaenger saldo))
       (r/content-type "text/html")))
 
 (def app
