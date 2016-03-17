@@ -25,11 +25,12 @@
 )
 
 (defn sqlquery_s [saldo]
- ; (+ 
+ (str  
  (:stand
-  (first (jdbc/query mysql-db ["select stand from geberkonten where geberkonten.nr = ?" saldo])))
- ;    (:betrag
- ; (first (jdbc/query mysql-db ["select sum(betrag) from transaktionen_geberkonten2nehmerkonten where empfaenger = ?" saldo])))
+  (first (jdbc/query mysql-db ["select stand from geberkonten where geberkonten.nr = ?" saldo]))) "  "
+  (vals
+  (first (jdbc/query mysql-db ["select sum(betrag) from transaktionen_geberkonten2nehmerkonten where empfaenger = ?" saldo]))
+  ))
 )
 
 (defn page [name empfaenger saldo]
