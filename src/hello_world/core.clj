@@ -38,7 +38,7 @@
        (if name
   (str "Nice to meet you, " name "! \n" "<div id='mgm_response' data='"(sqlquery name empfaenger)"'></div>")
          (str "<form>"
-              "Name: <input name='name' type='text'>"
+              "MGM ID: <input name='saldo' type='text'>"
               "<input type='submit'>"
               "</form>"))
        (if saldo
